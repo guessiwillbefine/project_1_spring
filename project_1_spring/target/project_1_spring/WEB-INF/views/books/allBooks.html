@@ -3,12 +3,13 @@
 <meta charset="UTF-8">
 <head>
 <title>All books</title>
+    <link rel="stylesheet" th:href="@{/css/styleBooks.css}" href="css/styleBooks.css" type="text/css" media="all">
 </head>
 <body>
 <div>Book List:</div>
 <br/>
 <div th:each="book : ${bookss}">
-    <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getBookName()} + ',  ' + ${book.getAuthor()}"></a>
+    <a class = "a" th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getBookName()} + ',  ' + ${book.getAuthor()}"></a>
 </div>
 <hr>
 <h3>

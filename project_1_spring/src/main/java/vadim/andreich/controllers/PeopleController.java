@@ -1,16 +1,16 @@
 package vadim.andreich.controllers;
 
-import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
+import vadim.andreich.util.PersonValidator;
 import org.springframework.ui.Model;
 import vadim.andreich.DAO.PeopleDAO;
 import vadim.andreich.models.Person;
 import vadim.andreich.DAO.BooksDAO;
-import vadim.andreich.util.PersonValidator;
-
 import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("/people")
@@ -45,7 +45,6 @@ public class PeopleController {
     public String showAddingPerson(@ModelAttribute("person")Person person){
                 return "people/addNew";
     }
-
     @PostMapping("/new")
     public String addPerson(@ModelAttribute("person")@Valid Person person,
                             BindingResult bindingResult){
@@ -54,18 +53,28 @@ public class PeopleController {
              peopleDAO.addPerson(person);
              return "redirect:/people";
          }
-         return "redirect:people/addNew";
+         return "people/addNew";
     }
 
     @DeleteMapping("/{id}/delete")
     public String deletePerson(@PathVariable("id") int id) {
         System.out.println(id);
         peopleDAO.deleteBookById(id);
-        return "redirect:/books/";
+        return "redirect:/people/";
     }
     @GetMapping("/{id}/edit")
     public String showEditPerson(@PathVariable("id") int id, Model model) {
         model.addAttribute("personToEdit", peopleDAO.findById(id));
+        return "people/editPerson";
+    }
+    @PatchMapping("/{id}")
+    public String editPerson(@PathVariable("id")int id, @ModelAttribute("personToEdit")
+                            @Valid Person person, BindingResult bindingResult){
+
+        if(!bindingResult.hasErrors()) {
+            peopleDAO.editPerson(id,person);
+            return "redirect:/people";
+        }
         return "people/editPerson";
     }
 }

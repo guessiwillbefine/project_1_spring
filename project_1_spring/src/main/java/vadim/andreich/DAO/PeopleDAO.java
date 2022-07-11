@@ -35,11 +35,15 @@ public class PeopleDAO {
     }
 
     public Optional<Person> findByName(String name) {
-        return Optional.ofNullable(jdbcTemplate.query("SELECT * FROM person WHERE name = ?",
-                        new BeanPropertyRowMapper<>(Person.class), name).stream().findAny().orElse(null));
+        return jdbcTemplate.query("SELECT * FROM person WHERE name = ?",
+                        new BeanPropertyRowMapper<>(Person.class), name).stream().findAny();
     }
 
     public void deleteBookById(int id) {
         jdbcTemplate.update("DELETE FROM person where id = ?", id);
+    }
+
+    public void editPerson(int id, Person person) {
+        jdbcTemplate.update("UPDATE person SET name = ?, birthday = ? WHERE id = ?", person.getName(), person.getBirthday(), id);
     }
 }

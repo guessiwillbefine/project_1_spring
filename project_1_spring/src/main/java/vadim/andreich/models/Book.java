@@ -1,20 +1,18 @@
 package vadim.andreich.models;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 public class Book {
     private int id;
 
-    @NotEmpty
+    @Pattern(regexp = ".+", message = "not null")
     private String BookName;
-    @NotEmpty
+    @Pattern(regexp = "\\w+\\.\\w\\. \\w+", message = "format : N.M. Surname")
     private String author;
     private int year;
-    public int getId() {
-        return id;
-    }
-    public void setIdBook(int idBook) {
-        this.id = idBook;
-    }
+    public int getId() {return id;}
+    public void setIdBook(int idBook) {this.id = idBook;}
     public String getBookName() {
         return BookName;
     }

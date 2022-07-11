@@ -1,0 +1,9 @@
+.a{
+    text-decoration:none;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(0, 0, 0, 0.993);
+}
+.a:hover{
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.568);
+}

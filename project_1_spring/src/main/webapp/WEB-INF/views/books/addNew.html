@@ -9,15 +9,15 @@
 <form th:method="POST" th:action="@{/books/new}" th:object="${book}">
     <label for="title">Title </label>
     <input type="text" th:field="*{bookName}" id="title"/>
-    <div style="color:#e79494" th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}">Title Error</div>
+    <div th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}">Title Error</div>
     <br/>
     <label for="author">Author: </label>
     <input type="text" th:field="*{author}" id="author"/>
-    <div style="color:#d78787" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author Error</div>
+    <div th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author Error</div>
     <br/>
     <label for="year">Year: </label>
     <input type="text" th:field="*{year}" id="year"/>
-    <div style="color:#c78585" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div>
+    <div th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div>
     <br/>
     <input type="submit" value="create"/>
 </form>

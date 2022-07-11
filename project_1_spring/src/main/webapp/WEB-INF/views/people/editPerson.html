@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>New person</title>
+  <title>Edit person</title>
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/books/{id}/edit(id = ${personToEdit.getId()})}" th:object="${personToEdit}">
+<form th:method="PATCH" th:action="@{/people/{id}(id = ${personToEdit.getId()})}" th:object="${personToEdit}">
   <label for="name">Full Name</label>
   <input type="text" th:field="*{name}" id="name"/>
   <br/>

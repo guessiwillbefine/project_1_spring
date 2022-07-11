@@ -29,7 +29,7 @@ public class PersonValidator implements Validator {
         if (peopleDAO.findByName(person.getName()).isPresent()) {
             Person foundedPerson = peopleDAO.findByName(person.getName()).get();
             if (Objects.equals(person.getName(), foundedPerson.getName())) {
-                errors.rejectValue("name", "already in DB");
+                errors.rejectValue("name","","already in DB");
             }
         }
     }

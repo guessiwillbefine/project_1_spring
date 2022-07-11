@@ -1,13 +1,12 @@
 package vadim.andreich.util;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Validator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
+import org.jetbrains.annotations.NotNull;
 import vadim.andreich.DAO.BooksDAO;
 import vadim.andreich.models.Book;
-
 
 @Component
 public class BookValidator implements Validator {
@@ -27,6 +26,6 @@ public class BookValidator implements Validator {
     public void validate(@NotNull Object o, @NotNull Errors errors) {
         Book book = (Book) o;
         if (booksDAO.findByName(book.getBookName()).isPresent())
-            errors.rejectValue("bookName", "this book is already in db");
+            errors.rejectValue("bookName", "", "this book is already in db");
     }
 }

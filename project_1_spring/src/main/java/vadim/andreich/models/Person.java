@@ -2,7 +2,7 @@ package vadim.andreich.models;
 import javax.validation.constraints.Pattern;
 
 public class Person {
-    @Pattern(regexp = "\\w+ \\w+ \\w+", message = "pls enter full name")
+    @Pattern(regexp = "\\w+ \\w+ \\w+", message = "pls enter correct name")
     private String name;
     @Pattern(regexp = "\\d{1,2}\\.\\d{1,2}\\.\\d{4}", message = "date must be in dd.mm.yy format")
     private String birthday;
