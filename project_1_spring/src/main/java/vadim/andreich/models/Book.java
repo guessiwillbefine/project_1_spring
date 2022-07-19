@@ -3,16 +3,17 @@ package vadim.andreich.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "book")
-public class Book {
+public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idBook")
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Person_idPerson", referencedColumnName = "id")
     private Person owner;
 
@@ -55,6 +56,14 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     @Override

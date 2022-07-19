@@ -42,6 +42,7 @@ public class BooksController {
             System.out.println(booksDAO.findOwner(id).get());
             model.addAttribute("owner", booksDAO.findOwner(id).get());
         } else {
+            System.out.println("mimo");
             model.addAttribute("people", peopleDAO.getAll());
         }
         return "books/book";

@@ -36,6 +36,7 @@ public class Person {
     public String getName() { return name; }
     public String getBirthday() { return birthday; }
     public int getId() { return id; }
+
     @Override
     public String toString() {
         return name + ", " + birthday;
