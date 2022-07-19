@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Validator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.jetbrains.annotations.NotNull;
+
 import vadim.andreich.DAO.BooksDAO;
 import vadim.andreich.models.Book;
+
+import javax.validation.constraints.NotNull;
 
 @Component
 public class BookValidator implements Validator {

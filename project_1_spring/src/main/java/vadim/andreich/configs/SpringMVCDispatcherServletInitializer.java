@@ -1,6 +1,6 @@
 package vadim.andreich.configs;
 
-import org.jetbrains.annotations.NotNull;
+
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -9,6 +9,7 @@ import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.validation.constraints.NotNull;
 import java.util.EnumSet;
 
 public class SpringMVCDispatcherServletInitializer  extends AbstractAnnotationConfigDispatcherServletInitializer {

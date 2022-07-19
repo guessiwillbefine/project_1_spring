@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Validator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.jetbrains.annotations.NotNull;
+
 import vadim.andreich.DAO.PeopleDAO;
 import vadim.andreich.models.Person;
+
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Component
