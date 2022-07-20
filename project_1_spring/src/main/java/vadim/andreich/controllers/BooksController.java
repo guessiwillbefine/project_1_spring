@@ -38,10 +38,12 @@ public class BooksController {
         System.out.println(id);
         model.addAttribute("shownbook", booksDAO.findbyid(id));
         model.addAttribute("key", id);
-        if (booksDAO.findOwner(id).isPresent()) {
-            System.out.println(booksDAO.findOwner(id).get());
-            model.addAttribute("owner", booksDAO.findOwner(id).get());
+        if (booksDAO.findOwner(id) != null) {
+            System.out.println("popal v ne null");
+            System.out.println(booksDAO.findOwner(id));
+            model.addAttribute("owner", booksDAO.findOwner(id));
         } else {
+            System.out.println("popal v null");
             System.out.println("mimo");
             model.addAttribute("people", peopleDAO.getAll());
         }

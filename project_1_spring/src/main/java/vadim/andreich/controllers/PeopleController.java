@@ -59,9 +59,11 @@ public class PeopleController {
     @DeleteMapping("/{id}/delete")
     public String deletePerson(@PathVariable("id") int id) {
         System.out.println(id);
-        peopleDAO.deleteBookById(id);
+        peopleDAO.deletePerson(id);
+        //booksDAO.releaseBook();
         return "redirect:/people/";
     }
+
     @GetMapping("/{id}/edit")
     public String showEditPerson(@PathVariable("id") int id, Model model) {
         model.addAttribute("personToEdit", peopleDAO.findById(id));

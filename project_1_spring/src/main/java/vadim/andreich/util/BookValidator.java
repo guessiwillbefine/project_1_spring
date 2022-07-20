@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Validator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-
 import vadim.andreich.DAO.BooksDAO;
 import vadim.andreich.models.Book;
 
-import javax.validation.constraints.NotNull;
 
 @Component
 public class BookValidator implements Validator {
@@ -20,12 +18,12 @@ public class BookValidator implements Validator {
     }
 
     @Override
-    public boolean supports(@NotNull Class<?> aClass) {
+    public boolean supports(Class<?> aClass) {
         return Book.class.equals(aClass);
     }
 
     @Override
-    public void validate(@NotNull Object o, @NotNull Errors errors) {
+    public void validate(Object o, Errors errors) {
         Book book = (Book) o;
         if (booksDAO.findByName(book.getBookName()).isPresent())
             errors.rejectValue("bookName", "", "this book is already in db");
