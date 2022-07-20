@@ -20,7 +20,7 @@ public class Book implements Serializable {
     @Pattern(regexp = ".+", message = "not null")
     @Column(name = "BookName")
     private String BookName;
-    //@Pattern(regexp = "\\w\\.\\w\\. \\w+", message = "format : N.M. Surname")
+    @Pattern(regexp = "\\w\\. \\w+", message = "format : N.M. Surname")
     @Column(name = "author")
     private String author;
     @Column(name = "year")
