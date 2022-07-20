@@ -8,7 +8,7 @@ public class Book {
 
     @Pattern(regexp = ".+", message = "not null")
     private String BookName;
-    @Pattern(regexp = "\\w+\\.\\w\\. \\w+", message = "format : N.M. Surname")
+    @Pattern(regexp = "\\w\\. \\w+", message = "format : N. Surname")
     private String author;
     private int year;
     public int getId() {return id;}
