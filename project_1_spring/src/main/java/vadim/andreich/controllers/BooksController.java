@@ -46,9 +46,9 @@ public class BooksController {
         System.out.println(id);
         model.addAttribute("shownbook", bookService.findById(id).get());
         model.addAttribute("key", id);
-        if (booksDAO.findOwner(id) != null) {
+        if (bookService.findOwner(id) != null) {
             System.out.println("popal v ne null");
-            System.out.println(booksDAO.findOwner(id));
+            //System.out.println(booksDAO.findOwner(id));
             model.addAttribute("owner", bookService.findOwner(id));
         } else {
             System.out.println("popal v null");
@@ -100,13 +100,13 @@ public class BooksController {
 
     @PostMapping("/{id}/release")
     public String releaseBook(@PathVariable("id") int id) {
-        booksDAO.releaseBook(id);
+        bookService.releaseBook(id);
         return "redirect:/books";
     }
 
     @PostMapping("/{id}/set")
     public String releaseBook(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
-        booksDAO.giveBook(id, person.getId());
+       bookService.giveBook(id, person.getId());
         return "redirect:/books";
     }
 

@@ -43,7 +43,8 @@ public class PeopleController {
     public String showPerson(@PathVariable("id")int id, Model model){
         model.addAttribute("person", peopleService.findById(id).get());
         model.addAttribute("key", id);
-        model.addAttribute("books", booksDAO.findByPerson(id));
+        model.addAttribute("books", bookService.findByPerson(id));
+        System.out.println(bookService.findByPerson(id));
         return "people/Person";
     }
 
@@ -53,7 +54,7 @@ public class PeopleController {
     }
     @GetMapping("/{id}/edit")
     public String showEditPerson(@PathVariable("id") int id, Model model) {
-        model.addAttribute("personToEdit",peopleService.findById(id));
+        model.addAttribute("personToEdit",peopleService.findById(id).get());
         return "people/editPerson";
     }
 
@@ -78,7 +79,7 @@ public class PeopleController {
                             @Valid Person person, BindingResult bindingResult){
 
         if(!bindingResult.hasErrors()) {
-            peopleDAO.editPerson(id,person);
+            //peopleDAO.editPerson(id,person);
             peopleService.updatePerson(id, person);
             return "redirect:/people";
         }

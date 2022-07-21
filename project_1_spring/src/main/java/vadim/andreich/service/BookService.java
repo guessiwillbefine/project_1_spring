@@ -1,5 +1,6 @@
 package vadim.andreich.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,25 +30,40 @@ public class BookService {
     public Optional<Book> findById(int id) {
         return bookRepository.findById(id);
     }
+
     public List<Book> findByPerson(int id) {
         Person person = peopleService.findById(id).get();
+        Hibernate.initialize(person.getBooks());
         return person.getBooks();
     }
-    public Person findOwner(int id){
+
+    public Person findOwner(int id) {
         System.out.println(bookRepository.findOwnerById(id).getOwner() + " <--------");
-       return bookRepository.findOwnerById(id).getOwner();
+        return bookRepository.findOwnerById(id).getOwner();
     }
+
     @Transactional
-    public void deleteById(int id){
+    public void deleteById(int id) {
         bookRepository.deleteById(id);
     }
+
     @Transactional
-    public void addBook(Book book){
+    public void addBook(Book book) {
         bookRepository.save(book);
     }
+
     @Transactional
-    public void editBook(int id,Book updBook){
+    public void editBook(int id, Book updBook) {
         updBook.setIdBook(id);
+        //Hibernate.initialize(updBook);
         bookRepository.save(updBook);
+    }
+    @Transactional
+    public void releaseBook(int id){
+        findById(id).get().setOwner(null);
+    }
+    @Transactional
+    public void giveBook(int bookId, int idPerson){
+        findById(bookId).get().setOwner(peopleService.findById(idPerson).get());
     }
 }
