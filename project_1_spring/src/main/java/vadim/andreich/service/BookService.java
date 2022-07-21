@@ -30,11 +30,24 @@ public class BookService {
         return bookRepository.findById(id);
     }
     public List<Book> findByPerson(int id) {
-        //check custom jpa requests
-        return null;
+        Person person = peopleService.findById(id).get();
+        return person.getBooks();
     }
-    public Optional<Person> findOwner(int id){
-        Optional<Book> book = bookRepository.findById(id);
-        return null;
+    public Person findOwner(int id){
+        System.out.println(bookRepository.findOwnerById(id).getOwner() + " <--------");
+       return bookRepository.findOwnerById(id).getOwner();
+    }
+    @Transactional
+    public void deleteById(int id){
+        bookRepository.deleteById(id);
+    }
+    @Transactional
+    public void addBook(Book book){
+        bookRepository.save(book);
+    }
+    @Transactional
+    public void editBook(int id,Book updBook){
+        updBook.setIdBook(id);
+        bookRepository.save(updBook);
     }
 }
