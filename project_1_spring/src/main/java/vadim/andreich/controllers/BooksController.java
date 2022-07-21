@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
+import vadim.andreich.service.BookService;
 import vadim.andreich.util.BookValidator;
 import org.springframework.ui.Model;
 import vadim.andreich.models.Person;
@@ -17,17 +18,19 @@ public class BooksController {
     private final BookValidator bookValidator;
     private final BooksDAO booksDAO;
     private final PeopleDAO peopleDAO;
+    private final BookService bookService;
 
     @Autowired
-    public BooksController(BookValidator bookValidator, BooksDAO booksDAO, PeopleDAO peopleDAO) {
+    public BooksController(BookValidator bookValidator, BooksDAO booksDAO, PeopleDAO peopleDAO, BookService bookService) {
         this.bookValidator = bookValidator;
         this.booksDAO = booksDAO;
         this.peopleDAO = peopleDAO;
+        this.bookService = bookService;
     }
 
     @GetMapping()
     public String getAllPeopleList(Model model) {
-        model.addAttribute("bookss", booksDAO.getAll());
+        model.addAttribute("bookss", bookService.getAll());
         return "books/allBooks";
     }
 
@@ -36,7 +39,7 @@ public class BooksController {
                            @ModelAttribute("person") Person person,
                            Model model) {
         System.out.println(id);
-        model.addAttribute("shownbook", booksDAO.findbyid(id));
+        model.addAttribute("shownbook", bookService.findById(id));
         model.addAttribute("key", id);
         if (booksDAO.findOwner(id) != null) {
             System.out.println("popal v ne null");
