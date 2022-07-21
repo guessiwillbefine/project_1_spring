@@ -10,4 +10,5 @@ import javax.validation.constraints.Pattern;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
     Book findOwnerById(int i);
+    Book findDistinctByBookName(String name);
 }

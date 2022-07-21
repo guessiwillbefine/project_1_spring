@@ -66,4 +66,9 @@ public class BookService {
     public void giveBook(int bookId, int idPerson){
         findById(bookId).get().setOwner(peopleService.findById(idPerson).get());
     }
+    @Transactional
+    public Book findByName(String bookName) {
+        return bookRepository.findDistinctByBookName(bookName);
+
+    }
 }

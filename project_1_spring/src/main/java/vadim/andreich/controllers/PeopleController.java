@@ -18,16 +18,13 @@ import javax.validation.Valid;
 @RequestMapping("/people")
 public class PeopleController {
 
-    private final PeopleDAO peopleDAO;
-    private final BooksDAO booksDAO;
     private final PersonValidator personValidator;
     private final PeopleService peopleService;
     private final BookService bookService;
 
     @Autowired
-    public PeopleController(PeopleDAO peopleDAO, BooksDAO booksDAO, PersonValidator personValidator, PeopleService peopleService, BookService bookService) {
-        this.peopleDAO = peopleDAO;
-        this.booksDAO = booksDAO;
+    public PeopleController(PersonValidator personValidator, PeopleService peopleService, BookService bookService) {
+
         this.personValidator = personValidator;
         this.peopleService = peopleService;
         this.bookService = bookService;

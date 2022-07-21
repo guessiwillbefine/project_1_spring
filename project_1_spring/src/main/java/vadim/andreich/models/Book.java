@@ -19,7 +19,7 @@ public class Book implements Serializable {
 
     @Pattern(regexp = ".+", message = "not null")
     @Column(name = "BookName")
-    private String BookName;
+    private String bookName;
     @Pattern(regexp = "\\w\\. \\w+", message = "format : N.M. Surname")
     @Column(name = "author")
     private String author;
@@ -35,11 +35,11 @@ public class Book implements Serializable {
     }
 
     public String getBookName() {
-        return BookName;
+        return bookName;
     }
 
     public void setBookName(String bookName) {
-        BookName = bookName;
+        this.bookName = bookName;
     }
 
     public String getAuthor() {
@@ -68,6 +68,6 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        return "[" + BookName + ",  " + author + ", " + year + "]";
+        return "[" + bookName + ",  " + author + ", " + year + "]";
     }
 }

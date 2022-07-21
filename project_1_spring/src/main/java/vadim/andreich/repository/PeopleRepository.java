@@ -6,4 +6,5 @@ import vadim.andreich.models.Person;
 
 @Repository
 public interface PeopleRepository extends JpaRepository<Person, Integer> {
+   Person findPersonByName(String name);
 }

@@ -14,21 +14,16 @@ import vadim.andreich.DAO.BooksDAO;
 import vadim.andreich.models.Book;
 
 import javax.validation.Valid;
-
 @Controller
 @RequestMapping("/books")
 public class BooksController {
     private final BookValidator bookValidator;
-    private final BooksDAO booksDAO;
-    private final PeopleDAO peopleDAO;
     private final BookService bookService;
     private final PeopleService peopleService;
 
     @Autowired
-    public BooksController(BookValidator bookValidator, BooksDAO booksDAO, PeopleDAO peopleDAO, BookService bookService, PeopleService peopleService) {
+    public BooksController(BookValidator bookValidator, BookService bookService, PeopleService peopleService) {
         this.bookValidator = bookValidator;
-        this.booksDAO = booksDAO;
-        this.peopleDAO = peopleDAO;
         this.bookService = bookService;
         this.peopleService = peopleService;
     }

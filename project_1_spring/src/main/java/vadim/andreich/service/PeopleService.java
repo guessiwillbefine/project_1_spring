@@ -40,5 +40,8 @@ public class PeopleService {
         updPerson.setId(id);
         peopleRepository.save(updPerson);
     }
+    public Person findByName(String name){
+        return peopleRepository.findPersonByName(name);
+    }
 
 }
