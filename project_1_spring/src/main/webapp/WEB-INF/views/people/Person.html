@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" xmlns:th= "http://www.thymeleaf.org">
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Person</title>
 </head>
 <body>
-    <h1>
-    <div th:text ="${person.getName()}"> </div>
-    </h1>
-    <hr>
-    <br/>
+<h1>
+    <div th:text="${person.getName()}"></div>
+</h1>
+<hr>
+<br/>
+<div>
+    <h2>Books</h2>
+</div>
+<div th:if="${books}">
+    <div th:each="book : ${books}" }>
+        <div th:if="${book.isOverdue()}">
+            <div style="color: red;" th:text="${book}"></div>
+        </div>
+        <div th:unless = "${book.isOverdue()}">
+            <div th:text="${book}"></div>
+        </div>
+    </div>
+</div>
+<div th:if="${books.isEmpty()}">
     <div>
-        <h2>Books</h2>
+        <h3>No books yet :/</h3>
     </div>
-    <div th:if = "${books}">
-        <div th:each = "book : ${books}"}>
-            <div th:text = "${book}">
-            </div>
-        </div>
-    </div>
-    <div th:if = "${books.isEmpty()}">
-        <div>
-            <h3>No books yet :/</h3>
-        </div>
-    </div>
-    <hr>
-    <form th:action="@{/people/{id}/edit(id = *{key})}" th:method = "GET">
-        <br/>
-        <button>edit</button>
-    </form>
-    <form th:action="@{/people/{id}/delete(id = *{key})}" th:method = "DELETE">
-        <br/>
-        <button>delete</button>
-    </form>
+</div>
+<hr>
+<form th:action="@{/people/{id}/edit(id = *{key})}" th:method="GET">
+    <br/>
+    <button>edit</button>
+</form>
+<form th:action="@{/people/{id}/delete(id = *{key})}" th:method="DELETE">
+    <br/>
+    <button>delete</button>
+</form>
 </body>
 </html>

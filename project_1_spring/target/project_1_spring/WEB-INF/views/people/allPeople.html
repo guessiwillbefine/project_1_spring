@@ -3,8 +3,14 @@
     <meta charset="UTF-8">
     <title>All people</title>
 <body>
-    <div>PeopleList:</div>
+    <div><h2>PeopleList:</h2></div>
     <br/>
+    <hr>
+    <div>
+        <form th:action="@{/people(len ='3')}" th:method = "GET">
+            <button>3</button>
+        </form>
+    </div>
     <div th:each="person : ${people}">
         <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person}"></a>
     </div>

@@ -14,6 +14,8 @@ import vadim.andreich.DAO.BooksDAO;
 import vadim.andreich.models.Book;
 
 import javax.validation.Valid;
+import java.util.Date;
+
 @Controller
 @RequestMapping("/books")
 public class BooksController {
@@ -38,7 +40,6 @@ public class BooksController {
     public String showBook(@ModelAttribute("id") int id,
                            @ModelAttribute("person") Person person,
                            Model model) {
-        System.out.println(id);
         model.addAttribute("shownbook", bookService.findById(id).get());
         model.addAttribute("key", id);
         if (bookService.findOwner(id) != null) {

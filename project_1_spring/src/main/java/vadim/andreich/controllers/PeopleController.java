@@ -12,6 +12,7 @@ import vadim.andreich.DAO.PeopleDAO;
 import vadim.andreich.models.Person;
 import vadim.andreich.DAO.BooksDAO;
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 @Controller
@@ -31,8 +32,10 @@ public class PeopleController {
     }
 
     @GetMapping()
-    public String getAllPeopleList(Model model){
+    public String getAllPeopleListt(Model model, @RequestParam(value = "len") Optional<Integer> len){
         model.addAttribute("people", peopleService.getAll());
+        len.ifPresent(System.out::println);
+        System.out.println("pusto");
         return "people/allPeople";
     }
 
@@ -41,7 +44,6 @@ public class PeopleController {
         model.addAttribute("person", peopleService.findById(id).get());
         model.addAttribute("key", id);
         model.addAttribute("books", bookService.findByPerson(id));
-        System.out.println(bookService.findByPerson(id));
         return "people/Person";
     }
 
@@ -76,7 +78,6 @@ public class PeopleController {
                             @Valid Person person, BindingResult bindingResult){
 
         if(!bindingResult.hasErrors()) {
-            //peopleDAO.editPerson(id,person);
             peopleService.updatePerson(id, person);
             return "redirect:/people";
         }

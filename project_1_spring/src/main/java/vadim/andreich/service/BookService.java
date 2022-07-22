@@ -2,12 +2,14 @@ package vadim.andreich.service;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.Literal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vadim.andreich.models.Book;
 import vadim.andreich.models.Person;
 import vadim.andreich.repository.BookRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +36,12 @@ public class BookService {
     public List<Book> findByPerson(int id) {
         Person person = peopleService.findById(id).get();
         Hibernate.initialize(person.getBooks());
+        person.getBooks().forEach(a -> {
+            System.out.println(a.getGivingTime());
+            if (System.currentTimeMillis() - a.getGivingTime().getTime() > 10000){
+                a.setOverdue(true);
+            }
+        });
         return person.getBooks();
     }
 
@@ -58,17 +66,21 @@ public class BookService {
         //Hibernate.initialize(updBook);
         bookRepository.save(updBook);
     }
+
     @Transactional
-    public void releaseBook(int id){
+    public void releaseBook(int id) {
         findById(id).get().setOwner(null);
     }
+
     @Transactional
-    public void giveBook(int bookId, int idPerson){
-        findById(bookId).get().setOwner(peopleService.findById(idPerson).get());
+    public void giveBook(int bookId, int idPerson) {
+        Person person = peopleService.findById(idPerson).get();
+        findById(bookId).get().setOwner(person);
+        findById(bookId).get().setGivingTime(new Date());
     }
+
     @Transactional
     public Book findByName(String bookName) {
         return bookRepository.findDistinctByBookName(bookName);
-
     }
 }
