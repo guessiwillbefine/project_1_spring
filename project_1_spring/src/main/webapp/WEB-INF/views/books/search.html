@@ -8,7 +8,7 @@
 <div>
     <form th:method="GET" th:action="@{/books/request}" th:object="${word}">
         <label for="request">title:</label>
-        <input type="text" id="request" th:field="*{param}"/>
+        <input type="text" id="request" th:field="${word}"/>
         <br/>
         <input type="submit" value="find"/>
     </form>

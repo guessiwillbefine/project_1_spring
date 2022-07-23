@@ -9,14 +9,9 @@ import vadim.andreich.service.PeopleService;
 import vadim.andreich.util.BookValidator;
 import org.springframework.ui.Model;
 import vadim.andreich.models.Person;
-import vadim.andreich.DAO.PeopleDAO;
-import vadim.andreich.DAO.BooksDAO;
 import vadim.andreich.models.Book;
-import vadim.andreich.util.Temp;
 
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/books")
@@ -33,9 +28,41 @@ public class BooksController {
     }
 
     @GetMapping()
-    public String getAllPeopleList(Model model) {
-        model.addAttribute("bookss", bookService.getAll());
+    public String getAllPeopleList(Model model,
+                                   @RequestParam(value = "length", required = false)Integer length,
+                                   @RequestParam(value = "sort", required = false)String sort) {
+
+        if (length == null && sort == null) {
+            model.addAttribute("bookss", bookService.getAll());
+            model.addAttribute("flag", true);
+            System.out.println("нет сортировки + нет длинны");
+        } else if (length != null && sort != null) {
+            model.addAttribute("bookss", bookService.getAll(0, length, sort));
+            model.addAttribute("flag", true);
+            System.out.println("есть сортировка + есть длинна");
+        }
+        else if (length != null) {
+            model.addAttribute("bookss", bookService.getAll(0, length));
+            model.addAttribute("flag", true);
+            System.out.println("нет сортировки + есть длинна");
+        } else {
+            model.addAttribute("bookss", bookService.getAll(sort));
+            model.addAttribute("flag", true);
+            System.out.println("есть сортировка + нет длинны");
+        }
+        model.addAttribute("sort", sort);
+        model.addAttribute("length", length);
         return "books/allBooks";
+    }
+
+    @GetMapping("/next")
+    public String getNextPage(Model model, @RequestParam("length") Integer length,
+                              @RequestParam("sort")String sort){
+        model.addAttribute("bookss", bookService.getAll(1, length, sort));
+        model.addAttribute("length", length);
+        model.addAttribute("sort", sort);
+        model.addAttribute("flag", true);
+        return "/books/allBooks";
     }
 
     @GetMapping("/{id}")
@@ -56,13 +83,6 @@ public class BooksController {
         return "books/book";
     }
 
-    @DeleteMapping("/{id}/delete")
-    public String deleteBook(@ModelAttribute("id") int id) {
-        System.out.println(id);
-        bookService.deleteById(id);
-        return "redirect:/people/";
-    }
-
     @GetMapping("/{id}/edit")
     public String showEditBook(@PathVariable("id") int id, Model model) {
         model.addAttribute("bookToEdit", bookService.findById(id).get());
@@ -71,25 +91,25 @@ public class BooksController {
 
     @GetMapping("/search")
     public String search(Model model) {
-        model.addAttribute("word", new Temp());
+        model.addAttribute("word", "");
         return "books/search";
     }
 
     @GetMapping("/request")
     public String request(Model model, @RequestParam(value = "param")String request) {
         System.out.println(request);
-        model.addAttribute("word", new Temp(request));
-        model.addAttribute("response",bookService.getBooksByLetter(request));
+        model.addAttribute("word", request);
+        model.addAttribute("response", bookService.getBooksByLetter(request));
         return "books/search";
     }
 
-    //    @GetMapping("books/search")
-//    public String responseOfSearch(Model model, @RequestParam("request")String request){
-//
-//        //по реквесту получить в сервисе книги и положить в модель
-//        model.addAttribute("response");
-//        return "books/search";
-//    }
+    @DeleteMapping("/{id}/delete")
+    public String deleteBook(@ModelAttribute("id") int id) {
+        System.out.println(id);
+        bookService.deleteById(id);
+        return "redirect:/people/";
+    }
+
     @PatchMapping("/{id}/edit")
     public String editBook(@PathVariable("id") int id, @ModelAttribute("bookToEdit") @Valid Book updBook, BindingResult bindingResult) {
         bookValidator.validate(updBook, bindingResult);

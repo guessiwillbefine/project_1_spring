@@ -2,6 +2,8 @@ package vadim.andreich.service;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.expression.spel.ast.Literal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,11 @@ public class BookService {
     public List<Book> getAll() {
         return bookRepository.findAll();
     }
+    public List<Book> getAll(String sortBy) {
+        return bookRepository.findAll(Sort.by(sortBy));
+    }
+    public List<Book> getAll(int numPage, int size){return bookRepository.findAll(PageRequest.of(numPage, size)).getContent();}
+    public List<Book> getAll(int numPage, int size, String sortBy){return bookRepository.findAll(PageRequest.of(numPage,size, Sort.by(sortBy))).getContent();}
 
     public Optional<Book> findById(int id) {
         return bookRepository.findById(id);
