@@ -12,9 +12,11 @@ import vadim.andreich.models.Person;
 import vadim.andreich.DAO.PeopleDAO;
 import vadim.andreich.DAO.BooksDAO;
 import vadim.andreich.models.Book;
+import vadim.andreich.util.Temp;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/books")
@@ -64,10 +66,30 @@ public class BooksController {
     @GetMapping("/{id}/edit")
     public String showEditBook(@PathVariable("id") int id, Model model) {
         model.addAttribute("bookToEdit", bookService.findById(id).get());
-        System.out.println(bookService.findById(id).get());
         return "books/editBook";
     }
 
+    @GetMapping("/search")
+    public String search(Model model) {
+        model.addAttribute("word", new Temp());
+        return "books/search";
+    }
+
+    @GetMapping("/request")
+    public String request(Model model, @RequestParam(value = "param")String request) {
+        System.out.println(request);
+        model.addAttribute("word", new Temp(request));
+        model.addAttribute("response",bookService.getBooksByLetter(request));
+        return "books/search";
+    }
+
+    //    @GetMapping("books/search")
+//    public String responseOfSearch(Model model, @RequestParam("request")String request){
+//
+//        //по реквесту получить в сервисе книги и положить в модель
+//        model.addAttribute("response");
+//        return "books/search";
+//    }
     @PatchMapping("/{id}/edit")
     public String editBook(@PathVariable("id") int id, @ModelAttribute("bookToEdit") @Valid Book updBook, BindingResult bindingResult) {
         bookValidator.validate(updBook, bindingResult);
@@ -102,7 +124,7 @@ public class BooksController {
 
     @PostMapping("/{id}/set")
     public String releaseBook(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
-       bookService.giveBook(id, person.getId());
+        bookService.giveBook(id, person.getId());
         return "redirect:/books";
     }
 

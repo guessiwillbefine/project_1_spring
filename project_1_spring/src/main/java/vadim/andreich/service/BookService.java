@@ -18,11 +18,20 @@ import java.util.Optional;
 public class BookService {
     private final BookRepository bookRepository;
     private final PeopleService peopleService;
+    private static final int OVERDUE_TIME = 432000;
 
     @Autowired
     public BookService(BookRepository bookRepository, PeopleService peopleService) {
         this.bookRepository = bookRepository;
         this.peopleService = peopleService;
+    }
+
+    public List<Book> getBooksByLetter(String request) {
+        System.out.println(bookRepository.findByBookNameStartingWith(request));
+        List<Book> books = bookRepository.findByBookNameStartingWith(request);
+        for (Book book : books)
+            System.out.println(book.getOwner());
+        return books;
     }
 
     public List<Book> getAll() {
@@ -38,7 +47,7 @@ public class BookService {
         Hibernate.initialize(person.getBooks());
         person.getBooks().forEach(a -> {
             System.out.println(a.getGivingTime());
-            if (System.currentTimeMillis() - a.getGivingTime().getTime() > 10000){
+            if (System.currentTimeMillis() - a.getGivingTime().getTime() > OVERDUE_TIME){
                 a.setOverdue(true);
             }
         });
@@ -63,7 +72,6 @@ public class BookService {
     @Transactional
     public void editBook(int id, Book updBook) {
         updBook.setIdBook(id);
-        //Hibernate.initialize(updBook);
         bookRepository.save(updBook);
     }
 

@@ -62,6 +62,7 @@ public class Book implements Serializable {
     public void setOwner(Person owner) {
         this.owner = owner;
     }
+    public boolean hasOwner(){return owner != null;}
     @Override
     public String toString() {
         return "[" + bookName + ",  " + author + ", " + year + "]";
@@ -79,11 +80,9 @@ public class Book implements Serializable {
     public int hashCode() {
         return Objects.hash(id, bookName, author);
     }
-
     public boolean isOverdue() {
         return IsOverdue;
     }
-
     public void setOverdue(boolean overdue) {
         IsOverdue = overdue;
     }
